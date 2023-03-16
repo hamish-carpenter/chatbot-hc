@@ -92,3 +92,5 @@ def run_bot():
         else:
             res = get_response(predicted_class)
             return "<p>" + res + "</p>"
+
+app.run(host="0.0.0.0", port=1234)
