@@ -1,3 +1,9 @@
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+
 import random
 import json
 import pickle
@@ -41,7 +47,7 @@ def google_definition(query: str) -> str:
             page_py = wiki_wiki.page(query) # searches wikipedia for the query
             return "From Wikipedia: ", page_py.title, "\nSummary: ", page_py.summary[0:250] # returns page title and summary of up to 250 character if applicable
         except:
-            return "I'm sorry, I don't know what that is." # returns error message if no knowledge graph or wikipedia page is found
+            return "<p>I'm sorry, I don't know what that is.</p>" # returns error message if no knowledge graph or wikipedia page is found
 
 
 
@@ -74,13 +80,15 @@ def get_response(predicted_class): # chooses random reposnse from list of inten
 
 print("bot is running")
 
-while True: # uses previous functions to get input, split it into its lemmetised words, then predict & return a response
-    message = input("")
-    predicted_class, accuracy = predict_class(message)
-    print(accuracy)
-    if accuracy < ERROR_THRESHOLD:
-        print("probability too low, returning google search answer")
-        res = google_definition(message)
-    else:
-        res = get_response(predicted_class)
-    print(res)
+def run_bot():
+    while True: # uses previous functions to get input, split it into its lemmetised words, then predict & return a response
+        message = input("")
+        predicted_class, accuracy = predict_class(message)
+        print(accuracy)
+        if accuracy < ERROR_THRESHOLD:
+            print("probability too low, returning google search answer")
+            res = google_definition(message)
+            return "<p>" + res + "</p>"
+        else:
+            res = get_response(predicted_class)
+            return "<p>" + res + "</p>"
