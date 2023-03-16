@@ -82,7 +82,7 @@ app = Flask(__name__)
 @app.route("/message-input") # provides route for URL 
 def run_bot():
     while True: # uses previous functions to get input, split it into its lemmetised words, then predict & return a response
-        message = request.args.get("message") # fetches query from URL
+        message = str(request.args.get("message")) # fetches query from URL
         predicted_class, accuracy = predict_class(message) # predicts class
         print(accuracy)
         if accuracy < ERROR_THRESHOLD:
