@@ -1,9 +1,5 @@
 from flask import Flask
 
-app = Flask(__name__)
-
-@app.route("/")
-
 import random
 import json
 import pickle
@@ -80,6 +76,10 @@ def get_response(predicted_class): # chooses random reposnse from list of inten
 
 print("bot is running")
 
+
+app = Flask(__name__)
+
+@app.route("/")
 def run_bot():
     while True: # uses previous functions to get input, split it into its lemmetised words, then predict & return a response
         message = input("")
